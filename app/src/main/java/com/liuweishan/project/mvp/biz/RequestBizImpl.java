@@ -2,9 +2,6 @@ package com.liuweishan.project.mvp.biz;
 
 import java.util.ArrayList;
 
-/**
- * Created by Zys on 2016/9/14.
- */
 public class RequestBizImpl implements RequestBiz{
     @Override
     public void requestForData(final OnRequestListener listener) {

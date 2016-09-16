@@ -1,5 +1,6 @@
 package com.liuweishan.project.mvp;
 
+import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,7 +16,6 @@ import com.liuweishan.project.mvp.biz.RequestBiz;
 import com.liuweishan.project.mvp.biz.RequestBizImpl;
 
 import java.util.List;
-import java.util.logging.Handler;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,11 +29,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-        requestBiz = new RequestBizImpl();
-        tv = (TextView) findViewById(R.id.tv);
-        lv = (ListView) findViewById(R.id.lv);
-//        handler = new Handler(Looper.getMainLooper());
-        tv.setVisibility(View.VISIBLE);
+
+        initView();
         setREquestData();
 
         itemClickListener = new AdapterView.OnItemClickListener() {
@@ -45,18 +42,33 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void initView() {
+        requestBiz = new RequestBizImpl();
+        tv = (TextView) findViewById(R.id.tv);
+        lv = (ListView) findViewById(R.id.lv);
+        handler = new Handler(Looper.getMainLooper());
+        tv.setVisibility(View.VISIBLE);
+
+    }
+
     private void setREquestData() {
         requestBiz.requestForData(new OnRequestListener() {
             @Override
-            public void onSuccess(List<String> data) {
-                tv.setVisibility(View.GONE);
-                ArrayAdapter adapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, data);
-                lv.setAdapter(adapter);
-                lv.setOnItemClickListener(itemClickListener);
+            public void onSuccess(final List<String> data) {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        tv.setVisibility(View.GONE);
+                        ArrayAdapter adapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, data);
+                        lv.setAdapter(adapter);
+                        lv.setOnItemClickListener(itemClickListener);
+                    }
+                });
+
             }
             @Override
             public void onFailed() {
-
+                Toast.makeText(MainActivity.this, "加载失败", Toast.LENGTH_SHORT).show();
             }
         });
     }
