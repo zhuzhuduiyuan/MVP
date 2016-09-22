@@ -12,7 +12,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.liuweishan.project.mvp.MainActivity;
 import com.liuweishan.project.mvp.R;
 import com.liuweishan.project.mvp.biz.OnRequestListener;
 import com.liuweishan.project.mvp.biz.RequestBiz;

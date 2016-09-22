@@ -3,17 +3,19 @@ package com.liuweishan.project.mvp.mvp.view;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.liuweishan.project.mvp.R;
 import com.liuweishan.project.mvp.mvp.presenter.MvpPreSenter;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
@@ -63,6 +65,23 @@ public class MVPActivity extends Activity implements AdapterView.OnItemClickList
 
         ArrayAdapter adapter = new ArrayAdapter(context, android.R.layout.simple_list_item_1, data);
         lv.setAdapter(adapter);
+    }
+
+
+    private static class MyHandler extends Handler {
+        private WeakReference<MVPActivity> activityWeakReference;
+
+        public MyHandler(MVPActivity activity) {
+            activityWeakReference = new WeakReference<MVPActivity>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            MVPActivity activity = activityWeakReference.get();
+            if (activity != null) {
+
+            }
+        }
     }
 
     @Override

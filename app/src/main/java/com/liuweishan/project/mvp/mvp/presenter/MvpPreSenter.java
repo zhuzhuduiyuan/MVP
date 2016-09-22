@@ -22,7 +22,10 @@ public class MvpPreSenter {
         this.mvpView = mvpView;
         requestBiz = new RequestBizImpl();
         handler = new Handler(Looper.getMainLooper());
+
     }
+
+
 
     public void onResume() {
         mvpView.showLoading();
