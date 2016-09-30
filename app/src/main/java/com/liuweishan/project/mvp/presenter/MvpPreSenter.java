@@ -1,19 +1,19 @@
-package com.liuweishan.project.mvp.mvp.presenter;
+package com.liuweishan.project.mvp.presenter;
 
 import android.os.Handler;
 import android.os.Looper;
 
-import com.liuweishan.project.mvp.biz.OnRequestListener;
-import com.liuweishan.project.mvp.biz.RequestBiz;
-import com.liuweishan.project.mvp.biz.RequestBizImpl;
-import com.liuweishan.project.mvp.mvp.view.MVPView;
+import com.liuweishan.project.mvp.model.OnRequestListener;
+import com.liuweishan.project.mvp.model.RequestBiz;
+import com.liuweishan.project.mvp.model.RequestBizImpl;
+import com.liuweishan.project.mvp.view.MVPView;
 
 import java.util.List;
 
 /**
  * Created by Shanzi on 2016/9/16.
  */
-public class MvpPreSenter {
+public class MvpPreSenter extends BasePresenter<MVPView>{
     public RequestBiz requestBiz;
     private MVPView mvpView;
     private final Handler handler;
@@ -24,8 +24,6 @@ public class MvpPreSenter {
         handler = new Handler(Looper.getMainLooper());
 
     }
-
-
 
     public void onResume() {
         mvpView.showLoading();

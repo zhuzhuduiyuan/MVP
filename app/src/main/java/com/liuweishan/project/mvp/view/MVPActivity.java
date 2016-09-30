@@ -1,10 +1,7 @@
-package com.liuweishan.project.mvp.mvp.view;
+package com.liuweishan.project.mvp.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,16 +10,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.liuweishan.project.mvp.R;
-import com.liuweishan.project.mvp.mvp.presenter.MvpPreSenter;
+import com.liuweishan.project.mvp.presenter.MvpPreSenter;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
  * Created by Shanzi on 2016/9/16.
  */
-public class MVPActivity extends Activity implements AdapterView.OnItemClickListener, MVPView {
-    private MvpPreSenter mvpPreSenter;
+public class MVPActivity
+        extends BaseMVPActivity<MVPView,MvpPreSenter>
+        implements AdapterView.OnItemClickListener, MVPView {
+
     private TextView tv;
     private Context context;
     private ListView lv;
@@ -30,17 +28,21 @@ public class MVPActivity extends Activity implements AdapterView.OnItemClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mvp);
 
-        mvpPreSenter = new MvpPreSenter(this);
+        setContentView(R.layout.activity_mvp);
         context = MVPActivity.this;
         initView();
     }
 
     @Override
+    protected MvpPreSenter initPresenter() {
+        return new MvpPreSenter(this);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
-        mvpPreSenter.onResume();
+        presenter.onResume();
     }
 
     private void initView() {
@@ -67,33 +69,15 @@ public class MVPActivity extends Activity implements AdapterView.OnItemClickList
         lv.setAdapter(adapter);
     }
 
-
-    private static class MyHandler extends Handler {
-        private WeakReference<MVPActivity> activityWeakReference;
-
-        public MyHandler(MVPActivity activity) {
-            activityWeakReference = new WeakReference<MVPActivity>(activity);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            MVPActivity activity = activityWeakReference.get();
-            if (activity != null) {
-
-            }
-        }
-    }
-
     @Override
     public void showMessage(String string) {
 
         Toast.makeText(context, string, Toast.LENGTH_SHORT).show();
     }
 
-
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-        mvpPreSenter.onItemClick(i);
+        presenter.onItemClick(i);
     }
 }

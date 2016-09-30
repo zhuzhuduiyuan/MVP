@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.liuweishan.project.mvp.mvp.view.MVPActivity;
+import com.liuweishan.project.mvp.view.MVPActivity;
 
 public class MainActivity extends AppCompatActivity {
 

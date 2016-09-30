@@ -1,4 +1,4 @@
-package com.liuweishan.project.mvp.biz;
+package com.liuweishan.project.mvp.model;
 
 import java.util.List;
 
